@@ -44,7 +44,9 @@ public class UserInfoServlet extends HttpServlet {
 		userInfo.put("uiName", request.getParameter("uiName"));
 		userInfo.put("uiPwd", request.getParameter("uiPwd"));
 		userInfo.put("uiDesc", request.getParameter("uiDesc"));
-		userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-","")); // '-' 를 빈문자로
+		if(request.getParameter("uiBirth")!=null) {
+			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
+		}
 		
 		if("insert".equals(cmd)) {
 			userInfo.put("uiId", request.getParameter("uiId"));
