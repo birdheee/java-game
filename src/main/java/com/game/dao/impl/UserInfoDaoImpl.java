@@ -14,7 +14,7 @@ import com.game.dao.UserInfoDao;
 public class UserInfoDaoImpl implements UserInfoDao {
 
 	@Override
-	public List<Map<String, String>> selectUserInfoList() {
+	public List<Map<String, String>> selectUserInfoList(Map<String, String> userInfo) {
 		String sql = "SELECT UI_NUM, UI_NAME, UI_ID, UI_PWD, UI_IMG_PATH, UI_DESC ,\r\n"
 				+ "UI_BIRTH, CREDAT, CRETIM, LMODAT, LMOTIM, ACTIVE FROM USER_INFO";
 		List<Map<String, String>> userInfoList = new ArrayList<>();
@@ -22,20 +22,20 @@ public class UserInfoDaoImpl implements UserInfoDao {
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				try(ResultSet rs = ps.executeQuery()){
 					while(rs.next()) {
-						Map<String,String> userInfo = new HashMap<>();
-						userInfo.put("uiNum", rs.getString("UI_NUM"));
-						userInfo.put("uiName", rs.getString("UI_NAME"));
-						userInfo.put("uiId", rs.getString("UI_ID"));
-						userInfo.put("uiPwd", rs.getString("UI_PWD"));
-						userInfo.put("uiImgPath", rs.getString("UI_IMG_PATH"));
-						userInfo.put("uiDesc", rs.getString("UI_DESC"));
-						userInfo.put("uiBirth", rs.getString("UI_BIRTH"));
-						userInfo.put("credat", rs.getString("CREDAT"));
-						userInfo.put("cretim", rs.getString("CRETIM"));
-						userInfo.put("lmodat", rs.getString("LMODAT"));
-						userInfo.put("lmotim", rs.getString("LMOTIM"));
-						userInfo.put("active", rs.getString("ACTIVE"));
-						userInfoList.add(userInfo);
+						Map<String,String> ui = new HashMap<>();
+						ui.put("uiNum", rs.getString("UI_NUM"));
+						ui.put("uiName", rs.getString("UI_NAME"));
+						ui.put("uiId", rs.getString("UI_ID"));
+						ui.put("uiPwd", rs.getString("UI_PWD"));
+						ui.put("uiImgPath", rs.getString("UI_IMG_PATH"));
+						ui.put("uiDesc", rs.getString("UI_DESC"));
+						ui.put("uiBirth", rs.getString("UI_BIRTH"));
+						ui.put("credat", rs.getString("CREDAT"));
+						ui.put("cretim", rs.getString("CRETIM"));
+						ui.put("lmodat", rs.getString("LMODAT"));
+						ui.put("lmotim", rs.getString("LMOTIM"));
+						ui.put("active", rs.getString("ACTIVE"));
+						userInfoList.add(ui);
 					}
 				}
 			}
@@ -144,11 +144,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
 			e.printStackTrace();
 		}
 		return 0;
-	}
-	
-	public static void main(String[] args) {
-		UserInfoDao uiRepo = new UserInfoDaoImpl();
-		System.out.println(uiRepo.selectUserInfoList());
 	}
 
 }
