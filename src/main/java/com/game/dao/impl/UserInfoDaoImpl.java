@@ -10,6 +10,8 @@ import java.util.Map;
 
 import com.game.common.DBCon;
 import com.game.dao.UserInfoDao;
+import com.game.service.UserInfoService;
+import com.game.service.impl.UserInfoServiceImpl;
 
 public class UserInfoDaoImpl implements UserInfoDao {
 
@@ -144,6 +146,9 @@ public class UserInfoDaoImpl implements UserInfoDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static void main(String[] args) {
 	}
 
 }

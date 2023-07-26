@@ -9,6 +9,7 @@ import com.game.service.UserInfoService;
 
 public class UserInfoServiceImpl implements UserInfoService {
 	// 아직은 큰 로직이 없음. 그저 중간다리 역할
+	// ID 유효성 검사 등을 함
 	private UserInfoDao uiDao = new UserInfoDaoImpl();
 
 	@Override
