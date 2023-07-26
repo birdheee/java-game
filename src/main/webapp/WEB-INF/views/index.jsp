@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>시작 페이지</title>
+<title>시작페이지</title>
 </head>
 <body>
-<h3>안녕하세요</h3>
-<p>Game 사이트에 오신 것을 환영합니다.</p>
-<a href="/user-info/list">유저 리스트</a><br>
-<a href="/board-info/list">게시판</a><br>
+<c:if test="${user!=null}">
+	${user.uiName}님 안녕하세요.
+	<button onclick="location.href='/user-info/logout'">로그아웃</button>
+</c:if>
+<c:if test="${user==null}">
+	<button onclick="location.href='/user-info/login'">로그인</button>
+</c:if>
+
+
 </body>
 </html>

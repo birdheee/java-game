@@ -3,6 +3,8 @@ package com.game.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.game.dao.UserInfoDao;
 import com.game.dao.impl.UserInfoDaoImpl;
 import com.game.service.UserInfoService;
@@ -35,6 +37,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public int deleteUserInfo(String uiNum) {
 		return uiDao.deleteUserInfo(uiNum);
+	}
+
+	@Override
+	public boolean login(Map<String, String> userInfo, HttpSession session) {
+		String uiId = userInfo.get("uiId");
+		Map<String, String> tmp = uiDao.selectUserInfoById(uiId);
+		if(tmp!=null) { // 있는 아이디인 경우
+			String uiPwd = tmp.get("uiPwd");
+			if(uiPwd.equals(userInfo.get("uiPwd"))) { // 데이터베이스 비번과 사용자 비번을 비교
+				session.setAttribute("user", tmp);
+				return true; // 로그인 성공 !
+			}
+		}
+		return false;
 	}
 
 }

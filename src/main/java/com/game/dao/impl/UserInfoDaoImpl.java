@@ -42,7 +42,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 				}
 			}
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		return userInfoList;
 	}
@@ -75,7 +75,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
 				}
 			}
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -106,6 +106,8 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		}
 		return 0;
 	}
+	
+	
 
 	@Override
 	public int updateUserInfo(Map<String, String> userInfo) {
@@ -148,7 +150,37 @@ public class UserInfoDaoImpl implements UserInfoDao {
 		return 0;
 	}
 	
-	public static void main(String[] args) {
+	@Override
+	public Map<String, String> selectUserInfoById(String uiId) {
+
+		String sql ="SELECT UI_NUM, UI_NAME, UI_ID, UI_PWD, UI_IMG_PATH, UI_DESC ,\r\n"
+				+ "DATE_FORMAT(UI_BIRTH,'%Y-%m-%d') UI_BIRTH, CREDAT, CRETIM, LMODAT, LMOTIM, ACTIVE FROM USER_INFO WHERE UI_ID=?";
+		try(Connection con = DBCon.getCon()){
+			try(PreparedStatement ps = con.prepareStatement(sql)){
+				ps.setString(1, uiId);
+				try(ResultSet rs = ps.executeQuery()){
+					while(rs.next()) {
+						Map<String,String> map = new HashMap<>();
+						map.put("uiNum", rs.getString("UI_NUM"));
+						map.put("uiName", rs.getString("UI_NAME"));
+						map.put("uiId", rs.getString("UI_ID"));
+						map.put("uiPwd", rs.getString("UI_PWD"));
+						map.put("uiImgPath", rs.getString("UI_IMG_PATH"));
+						map.put("uiDesc", rs.getString("UI_DESC"));
+						map.put("uiBirth", rs.getString("UI_BIRTH"));
+						map.put("credat", rs.getString("CREDAT"));
+						map.put("cretim", rs.getString("CRETIM"));
+						map.put("lmodat", rs.getString("LMODAT"));
+						map.put("lmotim", rs.getString("LMOTIM"));
+						map.put("active", rs.getString("ACTIVE"));
+						return map;
+					}
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.game.common.CommonView;
 import com.game.service.UserInfoService;
@@ -73,6 +73,15 @@ public class UserInfoServlet extends HttpServlet {
 			if(result!=1) {
 				request.setAttribute("msg", "삭제 실패");
 				request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
+			}
+		}else if("login".equals(cmd)) {
+			request.setAttribute("msg", "아이디나 비밀번호를 확인하세요");
+			request.setAttribute("url","/user-info/login");
+			HttpSession session = request.getSession();
+			boolean login = uiService.login(userInfo, session);
+			if(login) {
+				request.setAttribute("msg", "로그인을 완료하였습니다.");
+				request.setAttribute("url","/");
 			}
 		}
 		CommonView.forwardMessage(request, response);
