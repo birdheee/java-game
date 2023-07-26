@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보 수정</title>
+<title>유저 정보 수정</title>
 </head>
 <body>
-<h3>회원정보 수정</h3>
+<h3>유저 정보 수정</h3>
 <form method="POST" action="/user-info/update">
 	<input type="hidden" name="uiNum" value="${userInfo.uiNum}">
 	<input type="text" name="uiName" value="${userInfo.uiName}"><br>

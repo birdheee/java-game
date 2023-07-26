@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 등록</title>
+<title>유저 등록</title>
 </head>
 <body>
-<h3>회원 등록</h3>
+<h3>유저 등록</h3>
 <form method="POST" action="/user-info/insert">
 	<input type="text" name="uiId" placeholder="아이디"><br>
 	<input type="text" name="uiName" placeholder="이름"><br>

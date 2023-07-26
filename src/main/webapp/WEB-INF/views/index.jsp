@@ -9,5 +9,6 @@
 <body>
 <h3>안녕하세요</h3>
 <p>Game 사이트에 오신 것을 환영합니다.</p>
+<a href="/user-info/list">유저 리스트</a><br>
 </body>
 </html>

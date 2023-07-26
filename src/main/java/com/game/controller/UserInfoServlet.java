@@ -28,11 +28,7 @@ public class UserInfoServlet extends HttpServlet {
 			Map<String, String> userInfo = new HashMap<>();
 			List<Map<String,String>> userInfoList = uiService.selectUserInfoList(userInfo);
 			request.setAttribute("userInfoList", userInfoList);
-		}else if("view".equals(cmd)) {
-			String uiNum = request.getParameter("uiNum");
-			Map<String, String> userInfo = uiService.selectUserInfo(uiNum);
-			request.setAttribute("userInfo", userInfo);
-		}else if("update".equals(cmd)) {
+		}else if("view".equals(cmd) || "update".equals(cmd)) {
 			String uiNum = request.getParameter("uiNum");
 			Map<String, String> userInfo = uiService.selectUserInfo(uiNum);
 			request.setAttribute("userInfo", userInfo);
@@ -43,13 +39,15 @@ public class UserInfoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String cmd = CommonView.getCmd(request);
+		
+		Map<String, String> userInfo = new HashMap<>();
+		userInfo.put("uiName", request.getParameter("uiName"));
+		userInfo.put("uiPwd", request.getParameter("uiPwd"));
+		userInfo.put("uiDesc", request.getParameter("uiDesc"));
+		userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-","")); // '-' 를 빈문자로
+		
 		if("insert".equals(cmd)) {
-			Map<String, String> userInfo = new HashMap<>();
 			userInfo.put("uiId", request.getParameter("uiId"));
-			userInfo.put("uiName", request.getParameter("uiName"));
-			userInfo.put("uiPwd", request.getParameter("uiPwd"));
-			userInfo.put("uiDesc", request.getParameter("uiDesc"));
-			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-","")); // '-' 를 빈문자로
 			int result = uiService.insertUserInfo(userInfo);
 			request.setAttribute("msg", "등록 완료");
 			request.setAttribute("url", "/user-info/login");
@@ -58,30 +56,25 @@ public class UserInfoServlet extends HttpServlet {
 				request.setAttribute("url", "/user-info/insert");
 			}
 		}else if("update".equals(cmd)) {
-			Map<String, String> userInfo = new HashMap<>();
-			userInfo.put("uiNum", request.getParameter("uiNum"));
-			userInfo.put("uiName", request.getParameter("uiName"));
-			userInfo.put("uiPwd", request.getParameter("uiPwd"));
-			userInfo.put("uiDesc", request.getParameter("uiDesc"));
-			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
+			String uiNum = request.getParameter("uiNum");
+			userInfo.put("uiNum", uiNum);
 			int result = uiService.updateUserInfo(userInfo);
 			request.setAttribute("msg", "수정 완료");
-			request.setAttribute("url", "/user-info/view?uiNum=" + request.getParameter("uiNum"));
+			request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 			if(result!=1) {
 				request.setAttribute("msg", "수정 실패");
-				request.setAttribute("url", "/user-info/update?uiNum=" + request.getParameter("uiNum"));
+				request.setAttribute("url", "/user-info/update?uiNum=" + uiNum);
 			}
 		}else if("delete".equals(cmd)) {
-			int result = uiService.deleteUserInfo(request.getParameter("uiNum"));
+			String uiNum = request.getParameter("uiNum");
+			int result = uiService.deleteUserInfo(uiNum);
 			request.setAttribute("msg", "삭제 완료");
 			request.setAttribute("url", "/user-info/list");
 			if(result!=1) {
 				request.setAttribute("msg", "삭제 실패");
-				request.setAttribute("url", "/user-info/view?uiNum=" + request.getParameter("uiNum"));
+				request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 			}
 		}
 		CommonView.forwardMessage(request, response);
-		
 	}
-
 }
