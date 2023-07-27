@@ -89,24 +89,11 @@ public class UserInfoServlet extends HttpServlet {
 			request.setAttribute("url","/user-info/login");
 			HttpSession session = request.getSession(); // 브라우저 하나당 세션이 생김
 			
-			// 더 쉬운 방법
-			String uiId = request.getParameter("uiId");
-			String uiPwd = request.getParameter("uiPwd");
-			Map<String, String> ui = uiService.login(uiId);
-			if(ui!=null) {
-				String dbUiPwd = ui.get("uiPwd");
-				if(uiPwd.equals(dbUiPwd)) {
-					request.setAttribute("msg", "로그인 성공");
-					request.setAttribute("url","/");
-					session.setAttribute("user", ui);
-				}
+			boolean login = uiService.login(userInfo, session);
+			if(login) {
+				request.setAttribute("msg", "로그인을 완료하였습니다.");
+				request.setAttribute("url","/");
 			}
-			
-//			boolean login = uiService.login(userInfo, session);
-//			if(login) {
-//				request.setAttribute("msg", "로그인을 완료하였습니다.");
-//				request.setAttribute("url","/");
-//			}
 		}
 		CommonView.forwardMessage(request, response);
 	}

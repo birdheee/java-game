@@ -41,17 +41,33 @@ public class BoardInfoServlet extends HttpServlet {
 			List<Map<String, String>> boardInfoList = boardInfoService.selectBoardInfoList(null);
 			request.setAttribute("boardInfoList", boardInfoList);
 		}else if("view".equals(cmd) || "update".equals(cmd)) {
-			
+			Map<String, String> boardInfo = boardInfoService.selectBoardInfo(request.getParameter("biNum"));
+			request.setAttribute("boardInfo", boardInfo);
 		}
 		CommonView.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		if(!isLogin(request, response)) { // 로그인이 안되어 있으면
 			return;
 		}
 		String cmd = CommonView.getCmd(request);
-		
+		HttpSession session = request.getSession();
+		Map<String, String> user = (Map<String, String>)session.getAttribute("user");
+		if("insert".equals(cmd)) {
+			Map<String, String> param = new HashMap<>();
+			param.put("biTitle", request.getParameter("biTitle"));
+			param.put("biContent", request.getParameter("biContent"));
+			param.put("uiNum", user.get("uiNum"));
+			int result = boardInfoService.insertBoardInfo(param);
+			request.setAttribute("msg", "등록 안됨");
+			request.setAttribute("url", "/board-info/insert");
+			if(result==1) {
+				request.setAttribute("msg", "등록되었습니다.");
+				request.setAttribute("url", "/board-info/list");
+			}
+		}
 		CommonView.forwardMessage(request, response);
 	}
 

@@ -6,11 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>시작페이지</title>
-<script src="/resources/js/bootstrap.js"></script>
-<script src="/resources/js/bootstrap.bundle.js"></script>
-<link rel="stylesheet" href="/resources/css/bootstrap.css">
-<link rel="stylesheet" href="/resources/css/bootstrap-grid.css">
-<link rel="stylesheet" href="/resources/css/bootstrap-reboot.css">
 </head>
 <body>
 <!-- 내 세션 아이디 : <%=session.getId()%>  -->
