@@ -1,6 +1,9 @@
 package com.game.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,12 +36,23 @@ public class BoardInfoServlet extends HttpServlet {
 		if(!isLogin(request, response)) { // 로그인이 안되어 있으면
 			return;
 		}
+		String cmd = CommonView.getCmd(request);
+		if("list".equals(cmd)) {
+			List<Map<String, String>> boardInfoList = boardInfoService.selectBoardInfoList(null);
+			request.setAttribute("boardInfoList", boardInfoList);
+		}else if("view".equals(cmd) || "update".equals(cmd)) {
+			
+		}
+		CommonView.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!isLogin(request, response)) { // 로그인이 안되어 있으면
 			return;
 		}
+		String cmd = CommonView.getCmd(request);
+		
+		CommonView.forwardMessage(request, response);
 	}
 
 }

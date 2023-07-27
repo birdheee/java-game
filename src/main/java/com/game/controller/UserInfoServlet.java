@@ -35,7 +35,7 @@ public class UserInfoServlet extends HttpServlet {
 			request.setAttribute("userInfo", userInfo);
 		}else if("logout".equals(cmd)) {
 			HttpSession session = request.getSession();
-			session.invalidate();
+			session.invalidate(); // 무효화. 세션이 없어졌다 다시 생김
 			request.setAttribute("msg", "로그아웃 되었습니다");
 			request.setAttribute("url", "/user-info/login");
 			CommonView.forwardMessage(request, response);

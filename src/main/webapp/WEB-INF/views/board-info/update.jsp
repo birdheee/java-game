@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 수정</title>
+<title>게시물 수정</title>
 </head>
 <body>
-<h3>게시판 수정</h3>
+<h3>게시물 수정</h3>
 </body>
 </html>

@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글쓰기</title>
+<title>게시물 등록</title>
 </head>
 <body>
-<h3>게시판 등록</h3>
+<h3>게시물 등록</h3>
 </body>
 </html>
