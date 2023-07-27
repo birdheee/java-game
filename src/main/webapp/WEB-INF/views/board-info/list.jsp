@@ -9,7 +9,6 @@
 <jsp:include page="/WEB-INF/views/common/head.jsp"/>
 </head>
 <body>
-<h3>게시판</h3>
 <div class="container">
 <table class="table table-bordered">
   <thead>

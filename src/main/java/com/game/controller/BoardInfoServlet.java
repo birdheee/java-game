@@ -67,8 +67,30 @@ public class BoardInfoServlet extends HttpServlet {
 				request.setAttribute("msg", "등록되었습니다.");
 				request.setAttribute("url", "/board-info/list");
 			}
+		}else if("update".equals(cmd)) {
+			String biNum = request.getParameter("biNum");
+			Map<String, String> param = new HashMap<>();
+			param.put("biTitle", request.getParameter("biTitle"));
+			param.put("biContent", request.getParameter("biContent"));
+			param.put("biNum", biNum);
+			param.put("uiNum", user.get("uiNum"));
+			int result = boardInfoService.updateBoardInfo(param);
+			request.setAttribute("msg", "수정 안됨");
+			request.setAttribute("url", "/board-info/update?biNum=" + biNum);
+			if(result==1) {
+				request.setAttribute("msg", "수정되었습니다.");
+				request.setAttribute("url", "/board-info/view?biNum=" + biNum);
+			}
+		}else if("delete".equals(cmd)) {
+			String biNum = request.getParameter("biNum");
+			int result = boardInfoService.deleteBoardInfo(biNum);
+			request.setAttribute("msg", "삭제 안됨");
+			request.setAttribute("url", "/board-info/view?biNum=" + biNum);
+			if(result==1) {
+				request.setAttribute("msg", "삭제되었습니다.");
+				request.setAttribute("url", "/board-info/list");
+			}
 		}
 		CommonView.forwardMessage(request, response);
 	}
-
 }

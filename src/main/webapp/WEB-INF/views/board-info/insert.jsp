@@ -8,7 +8,6 @@
 <jsp:include page="/WEB-INF/views/common/head.jsp"/>
 </head>
 <body>
-<h3>게시물 등록</h3>
 <div class="container">
 <form method="POST" action="board-info/insert">
 	<div class="form-group">
