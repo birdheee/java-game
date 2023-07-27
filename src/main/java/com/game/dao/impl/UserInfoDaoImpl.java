@@ -152,7 +152,6 @@ public class UserInfoDaoImpl implements UserInfoDao {
 	
 	@Override
 	public Map<String, String> selectUserInfoById(String uiId) {
-
 		String sql ="SELECT UI_NUM, UI_NAME, UI_ID, UI_PWD, UI_IMG_PATH, UI_DESC ,\r\n"
 				+ "DATE_FORMAT(UI_BIRTH,'%Y-%m-%d') UI_BIRTH, CREDAT, CRETIM, LMODAT, LMOTIM, ACTIVE FROM USER_INFO WHERE UI_ID=?";
 		try(Connection con = DBCon.getCon()){

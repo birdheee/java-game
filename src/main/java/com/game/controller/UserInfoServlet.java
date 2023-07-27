@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.game.common.CommonView;
 import com.game.service.UserInfoService;
@@ -32,6 +33,13 @@ public class UserInfoServlet extends HttpServlet {
 			String uiNum = request.getParameter("uiNum");
 			Map<String, String> userInfo = uiService.selectUserInfo(uiNum);
 			request.setAttribute("userInfo", userInfo);
+		}else if("logout".equals(cmd)) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			request.setAttribute("msg", "로그아웃 되었습니다");
+			request.setAttribute("url", "/user-info/login");
+			CommonView.forwardMessage(request, response);
+			return;
 		}
 		CommonView.forward(request, response);
 	}
@@ -44,12 +52,12 @@ public class UserInfoServlet extends HttpServlet {
 		userInfo.put("uiName", request.getParameter("uiName"));
 		userInfo.put("uiPwd", request.getParameter("uiPwd"));
 		userInfo.put("uiDesc", request.getParameter("uiDesc"));
+		userInfo.put("uiId", request.getParameter("uiId"));
 		if(request.getParameter("uiBirth")!=null) {
 			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
 		}
 		
 		if("insert".equals(cmd)) {
-			userInfo.put("uiId", request.getParameter("uiId"));
 			int result = uiService.insertUserInfo(userInfo);
 			request.setAttribute("msg", "등록 완료");
 			request.setAttribute("url", "/user-info/login");
@@ -79,12 +87,26 @@ public class UserInfoServlet extends HttpServlet {
 		}else if("login".equals(cmd)) {
 			request.setAttribute("msg", "아이디나 비밀번호를 확인하세요");
 			request.setAttribute("url","/user-info/login");
-			HttpSession session = request.getSession();
-			boolean login = uiService.login(userInfo, session);
-			if(login) {
-				request.setAttribute("msg", "로그인을 완료하였습니다.");
-				request.setAttribute("url","/");
+			HttpSession session = request.getSession(); // 브라우저 하나당 세션이 생김
+			
+			// 더 쉬운 방법
+			String uiId = request.getParameter("uiId");
+			String uiPwd = request.getParameter("uiPwd");
+			Map<String, String> ui = uiService.login(uiId);
+			if(ui!=null) {
+				String dbUiPwd = ui.get("uiPwd");
+				if(uiPwd.equals(dbUiPwd)) {
+					request.setAttribute("msg", "로그인 성공");
+					request.setAttribute("url","/");
+					session.setAttribute("user", ui);
+				}
 			}
+			
+//			boolean login = uiService.login(userInfo, session);
+//			if(login) {
+//				request.setAttribute("msg", "로그인을 완료하였습니다.");
+//				request.setAttribute("url","/");
+//			}
 		}
 		CommonView.forwardMessage(request, response);
 	}

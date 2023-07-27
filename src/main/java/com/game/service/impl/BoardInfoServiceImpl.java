@@ -8,31 +8,31 @@ import com.game.dao.impl.BoardInfoDaoImpl;
 import com.game.service.BoardInfoService;
 
 public class BoardInfoServiceImpl implements BoardInfoService {
-	BoardInfoDao biDao = new BoardInfoDaoImpl();
-
+	private BoardInfoDao boardInfoDao = new BoardInfoDaoImpl();
+	
 	@Override
-	public List<Map<String, String>> selectBoardInfoList(Map<String, String> boardInfo) {
-		return biDao.selectBoardInfoList(boardInfo);
+	public List<Map<String, String>> selectBoardInfoList(Map<String, String> board) {
+		return boardInfoDao.selectBoardInfoList(board);
 	}
 
 	@Override
 	public Map<String, String> selectBoardInfo(String biNum) {
-		return biDao.selectBoardInfo(biNum);
+		return boardInfoDao.selectBoardInfo(biNum);
 	}
 
 	@Override
-	public int insertBoardInfo(Map<String, String> boardInfo) {
-		return biDao.insertBoardInfo(boardInfo);
+	public int insertBoardInfo(Map<String, String> board) {
+		return boardInfoDao.insertBoardInfo(board);
 	}
 
 	@Override
-	public int updateBoardInfo(Map<String, String> boardInfo) {
-		return biDao.updateBoardInfo(boardInfo);
+	public int updateBoardInfo(Map<String, String> board) {
+		return boardInfoDao.updateBoardInfo(board);
 	}
 
 	@Override
 	public int deleteBoardInfo(String biNum) {
-		return biDao.deleteBoardInfo(biNum);
+		return boardInfoDao.deleteBoardInfo(biNum);
 	}
 
 }
