@@ -8,9 +8,16 @@
 </head>
 <body>
 <h3>결과</h3>
+
+<script>
+	alert('${msg}');
+	location.href='${url}';
+</script>
+<%-- 
 <div>
 	${msg}
 </div>
 <button onclick="location.href='${url}'">확인</button>
+--%>
 </body>
 </html>

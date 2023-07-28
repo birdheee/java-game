@@ -10,7 +10,7 @@
 <body>
 <!-- 내 세션 아이디 : <%=session.getId()%>  -->
 <!-- 내 세션 타임아웃 : <%=session.getMaxInactiveInterval()%> -->
-<c:if test="${user!=null}">
+<c:if test="${sessionScope.user!=null}">
 	<h3>${user.uiName}님 안녕하세요.</h3>
 	<ul>
 		<li><a href="/user-info/my"></a>내 정보</li>
