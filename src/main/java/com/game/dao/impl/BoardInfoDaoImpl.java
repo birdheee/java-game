@@ -17,10 +17,17 @@ public class BoardInfoDaoImpl implements BoardInfoDao {
 	@Override
 	public List<Map<String, String>> selectBoardInfoList(Map<String, String> board) {
 		List<Map<String, String>> boardInfoList = new ArrayList<>();
-		String sql = "SELECT BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, CREDAT, CRETIM, LMODAT, \r\n"
-				+ "LMOTIM, ACTIVE FROM BOARD_INFO WHERE 1=1";
+		String sql = "SELECT BI.*, UI.UI_NAME FROM BOARD_INFO BI \r\n"
+				+ "INNER JOIN USER_INFO UI \r\n"
+				+ "ON BI.UI_NUM = UI.UI_NUM WHERE 1=1";
+		if(board != null) {
+			sql += " AND " + board.get("key") + " LIKE CONCAT('%',?,'%')";
+		}
 		try(Connection con = DBCon.getCon()){
 			try(PreparedStatement pstmt = con.prepareStatement(sql)){
+				if(board != null) {
+					pstmt.setString(1, board.get("value"));
+				}
 				try(ResultSet rs = pstmt.executeQuery()){
 					while(rs.next()) {
 						Map<String, String> boardInfo = new HashMap<>();
@@ -28,6 +35,7 @@ public class BoardInfoDaoImpl implements BoardInfoDao {
 						boardInfo.put("biTitle", rs.getString("BI_TITLE"));
 						boardInfo.put("biContent", rs.getString("BI_CONTENT"));
 						boardInfo.put("uiNum", rs.getString("UI_NUM"));
+						boardInfo.put("uiName", rs.getString("UI_NAME"));
 						boardInfo.put("credat", rs.getString("CREDAT"));
 						boardInfo.put("cretim", rs.getString("CRETIM"));
 						boardInfo.put("lmodat", rs.getString("LMODAT"));

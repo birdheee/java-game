@@ -10,6 +10,15 @@
 </head>
 <body>
 <div class="container">
+<form action="/board-info/list" method="GET">
+<select name="searchType">
+	<option value="BI_TITLE">제목</option>
+	<option value="UI_NAME">작성자</option>
+	<option value="BI_CONTENT">내용</option>
+</select>
+<input type="text" name="searchStr" placeholder="검색어">
+<button class="btn btn-info">검색</button>
+</form>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -24,7 +33,7 @@
 		<tr>
 			<td>${boardInfo.biNum}</td> 
 			<td><a href="/board-info/view?biNum=${boardInfo.biNum}">${boardInfo.biTitle}</a></td>
-			<td>${boardInfo.uiNum}</td>
+			<td>${boardInfo.uiName}</td>
 			<td>${boardInfo.credat}</td> 
 		</tr>
 		</c:forEach>
