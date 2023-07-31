@@ -12,9 +12,13 @@
 <div class="container">
 <form action="/board-info/list" method="GET">
 <select name="searchType">
-	<option value="BI_TITLE">제목</option>
-	<option value="UI_NAME">작성자</option>
-	<option value="BI_CONTENT">내용</option>
+	<option value="1">제목</option>
+	<option value="2">작성자</option>
+	<option value="3">내용</option>
+	<option value="4">제목+내용</option>
+	<option value="5">작성자+내용</option>
+	<option value="6">제목+작성자</option>
+	<option value="7">제목+작성자+내용</option>
 </select>
 <input type="text" name="searchStr" placeholder="검색어">
 <button class="btn btn-info">검색</button>

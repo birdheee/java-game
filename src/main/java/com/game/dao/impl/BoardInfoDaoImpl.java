@@ -21,7 +21,23 @@ public class BoardInfoDaoImpl implements BoardInfoDao {
 				+ "INNER JOIN USER_INFO UI \r\n"
 				+ "ON BI.UI_NUM = UI.UI_NUM WHERE 1=1";
 		if(board != null) {
-			sql += " AND " + board.get("key") + " LIKE CONCAT('%',?,'%')";
+			String key = board.get("key");
+			if("1".equals(key)) {
+				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%')";
+			}else if("2".equals(key)) {
+				sql += " AND UI_NAME LIKE CONCAT('%',?,'%')";
+			}else if("3".equals(key)) {
+				sql += " AND BI_CONTENT LIKE CONCAT('%',?,'%')";
+			}else if("4".equals(key)) {
+				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR BI_CONTENT LIKE CONCAT('%',?,'%')";
+			}else if("5".equals(key)) {
+				sql += " AND UI_NAME LIKE CONCAT('%',?,'%') OR BI_CONTENT LIKE CONCAT('%',?,'%')";
+			}else if("6".equals(key)) {
+				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR UI_NAME LIKE CONCAT('%',?,'%')";
+			}else if("7".equals(key)) {
+				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR UI_NAME LIKE CONCAT('%',?,'%') "
+						+ "OR BI_CONTENT LIKE CONCAT('%',?,'%')";
+			}
 		}
 		try(Connection con = DBCon.getCon()){
 			try(PreparedStatement pstmt = con.prepareStatement(sql)){
