@@ -42,7 +42,11 @@ public class BoardInfoDaoImpl implements BoardInfoDao {
 		try(Connection con = DBCon.getCon()){
 			try(PreparedStatement pstmt = con.prepareStatement(sql)){
 				if(board != null) {
-					pstmt.setString(1, board.get("value"));
+					String key = board.get("key");
+					if("1".equals(key) || "2".equals(key) || "3".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+					}
+					
 				}
 				try(ResultSet rs = pstmt.executeQuery()){
 					while(rs.next()) {
