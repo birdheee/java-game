@@ -5,8 +5,30 @@
 
 <mapper namespace="com.game.mapper.BoardInfoMapper">
     
-    <select id="selectBoardInfoList" resultType="map">
+    <select id="selectBoardInfoList" resultType="com.game.vo.BoardInfoVO">
         select * FROM BOARD_INFO
+        <where>
+        	<if test='biNum!=null and biNum!=0'>
+        		AND BI_NUM = #{biNum}
+        	</if>
+        	<if test='biTitle!=null and biTitle!=0'>
+        		AND BI_TITLE = #{biBitle}
+        	</if>
+        </where>
     </select>
-
+	<select id="selectBoardInfo" resultType="com.game.vo.BoardInfoVO">
+		SELECT * FROM BOARD_INFO WHERE BI_NUM=#{biNum}
+	</select>
+	<insert id="insertBoardInfo" parameterType="com.game.vo.BoardInfoVO">
+		INSERT INTO BOARD_INFO(BI_TITLE, BI_CONTENT, UI_NUM, CREDAT, CRETIM, LMODAT, LMOTIM)
+		VALUES(#{biTitle}, #{biContent}, #{uiNum}, DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'),
+		DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'))
+	</insert>
+	<update id="updateBoardInfo" parameterType="com.game.vo.BoardInfoVO">
+		UPDATE BOARD_INFO SET BI_TITLE=#{biTitle}, BI_CONTENT=#{biContent}
+		WHERE BI_NUM=#{biNum}
+	</update>
+	<delete id="deleteBoardInfo" parameterType="com.game.vo.BoardInfoVO">
+		DELETE FROM BOARD_INFO WHERE BI_NUM=#{biNum}
+	</delete>
 </mapper>

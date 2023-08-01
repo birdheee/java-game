@@ -3,7 +3,6 @@ package com.game.common;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.game.mapper.BoardInfoMapper;
+import com.game.vo.BoardInfoVO;
 
 public class MybatisSqlSessionFactory {
 	
@@ -32,11 +32,25 @@ public class MybatisSqlSessionFactory {
 	
 	public static void main(String[] args) {
 		SqlSessionFactory ssf = getSqlSessionFactory();
-		SqlSession session = ssf.openSession();
-		BoardInfoMapper biMapper = session.getMapper(BoardInfoMapper.class);
-		List<Map<String, String>> list = biMapper.selectBoardInfoList();
-		for(Map<String, String> board : list) {
-			System.out.println(board);
+		
+		try {
+			SqlSession session = ssf.openSession(true);
+			BoardInfoMapper biMapper = session.getMapper(BoardInfoMapper.class);
+			BoardInfoVO bi = new BoardInfoVO();
+			
+			// selectBoardInfoList
+			List<BoardInfoVO> list = biMapper.selectBoardInfoList(null);
+			for(BoardInfoVO board : list) {
+				System.out.println(board);
+			}
+			
+			// selectBoardInfo
+			bi.setBiNum(8);
+			BoardInfoVO biVo = biMapper.selectBoardInfo(bi);
+			System.out.println(biVo);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

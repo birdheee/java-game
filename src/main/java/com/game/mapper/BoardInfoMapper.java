@@ -1,8 +1,13 @@
 package com.game.mapper;
 
 import java.util.List;
-import java.util.Map;
+
+import com.game.vo.BoardInfoVO;
 
 public interface BoardInfoMapper {
-	List<Map<String, String>> selectBoardInfoList();
+	List<BoardInfoVO> selectBoardInfoList(BoardInfoVO board);
+	BoardInfoVO selectBoardInfo(BoardInfoVO board);
+	int insertBoardInfo(BoardInfoVO board);
+	int updateBoardInfo(BoardInfoVO board);
+	int deleteBoardInfo(BoardInfoVO board);
 }
