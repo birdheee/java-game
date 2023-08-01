@@ -20,33 +20,55 @@ public class BoardInfoDaoImpl implements BoardInfoDao {
 		String sql = "SELECT BI.*, UI.UI_NAME FROM BOARD_INFO BI \r\n"
 				+ "INNER JOIN USER_INFO UI \r\n"
 				+ "ON BI.UI_NUM = UI.UI_NUM WHERE 1=1";
-		if(board != null) {
+		if (board != null) {
 			String key = board.get("key");
-			if("1".equals(key)) {
+			if ("1".equals(key)) {
 				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%')";
-			}else if("2".equals(key)) {
+			} else if ("2".equals(key)) {
 				sql += " AND UI_NAME LIKE CONCAT('%',?,'%')";
-			}else if("3".equals(key)) {
-				sql += " AND BI_CONTENT LIKE CONCAT('%',?,'%')";
-			}else if("4".equals(key)) {
-				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR BI_CONTENT LIKE CONCAT('%',?,'%')";
-			}else if("5".equals(key)) {
-				sql += " AND UI_NAME LIKE CONCAT('%',?,'%') OR BI_CONTENT LIKE CONCAT('%',?,'%')";
-			}else if("6".equals(key)) {
-				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR UI_NAME LIKE CONCAT('%',?,'%')";
-			}else if("7".equals(key)) {
-				sql += " AND BI_TITLE LIKE CONCAT('%',?,'%') OR UI_NAME LIKE CONCAT('%',?,'%') "
-						+ "OR BI_CONTENT LIKE CONCAT('%',?,'%')";
+			} else if ("3".equals(key)) {
+				sql += " AND  BI_CONTENT LIKE CONCAT('%',?,'%')";
+			} else if ("4".equals(key)) {
+				sql += " AND ( BI_TITLE LIKE CONCAT('%',?,'%')";
+				sql += " OR BI_CONTENT LIKE CONCAT('%',?,'%'))";
+			} else if ("5".equals(key)) {
+				sql += " AND ( UI_NAME LIKE CONCAT('%',?,'%')";
+				sql += " OR BI_CONTENT LIKE CONCAT('%',?,'%'))";
+			} else if ("6".equals(key)) {
+				sql += " AND ( BI_TITLE LIKE CONCAT('%',?,'%')";
+				sql += " OR UI_NAME LIKE CONCAT('%',?,'%'))";
+			} else if ("7".equals(key)) {
+				sql += " AND ( BI_TITLE LIKE CONCAT('%',?,'%')";
+				sql += " OR UI_NAME LIKE CONCAT('%',?,'%')";
+				sql += " OR BI_CONTENT LIKE CONCAT('%',?,'%'))";
 			}
 		}
 		try(Connection con = DBCon.getCon()){
 			try(PreparedStatement pstmt = con.prepareStatement(sql)){
-				if(board != null) {
+				if (board != null) {
 					String key = board.get("key");
-					if("1".equals(key) || "2".equals(key) || "3".equals(key)) {
+					if ("1".equals(key)) {
 						pstmt.setString(1, board.get("value"));
+					} else if ("1".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+					} else if ("2".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+					} else if ("3".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+					} else if ("4".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+						pstmt.setString(2, board.get("value"));
+					} else if ("5".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+						pstmt.setString(2, board.get("value"));
+					} else if ("6".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+						pstmt.setString(2, board.get("value"));
+					} else if ("7".equals(key)) {
+						pstmt.setString(1, board.get("value"));
+						pstmt.setString(2, board.get("value"));
+						pstmt.setString(3, board.get("value"));
 					}
-					
 				}
 				try(ResultSet rs = pstmt.executeQuery()){
 					while(rs.next()) {
