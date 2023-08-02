@@ -1,10 +1,6 @@
 package com.game.vo;
 
 public class BoardInfoVO {
-	// 하나의 map이 아니라 vo를 사용
-	// 모든 변수 접근제어자는 private
-	// int는 integer, 나머지는 String, datetime의 변수 String 권장
-	
 	private int biNum;
 	private String biTitle;
 	private String biContent;
@@ -13,7 +9,6 @@ public class BoardInfoVO {
 	private String cretim;
 	private String lmodat;
 	private String lmotim;
-	private String active;
 	
 	public int getBiNum() {
 		return biNum;
@@ -63,18 +58,10 @@ public class BoardInfoVO {
 	public void setLmotim(String lmotim) {
 		this.lmotim = lmotim;
 	}
-	public String getActive() {
-		return active;
-	}
-	public void setActive(String active) {
-		this.active = active;
-	}
 	
 	@Override
 	public String toString() {
 		return "BoardInfoVO [biNum=" + biNum + ", biTitle=" + biTitle + ", biContent=" + biContent + ", uiNum=" + uiNum
-				+ ", credat=" + credat + ", cretim=" + cretim + ", lmodat=" + lmodat + ", lmotim=" + lmotim
-				+ ", active=" + active + "]";
+				+ ", credat=" + credat + ", cretim=" + cretim + ", lmodat=" + lmodat + ", lmotim=" + lmotim + "]";
 	}
-	
 }

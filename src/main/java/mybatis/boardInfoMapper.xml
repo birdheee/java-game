@@ -4,18 +4,17 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.game.mapper.BoardInfoMapper">
-    
-    <select id="selectBoardInfoList" resultType="com.game.vo.BoardInfoVO">
-        select * FROM BOARD_INFO
-        <where>
-        	<if test='biNum!=null and biNum!=0'>
-        		AND BI_NUM = #{biNum}
-        	</if>
-        	<if test='biTitle!=null and biTitle!=0'>
-        		AND BI_TITLE = #{biBitle}
-        	</if>
-        </where>
-    </select>
+	<select id="selectBoardInfoList" resultType="com.game.vo.BoardInfoVO">
+		SELECT * FROM BOARD_INFO
+		<where>
+			<if test='biNum!=null and biNum!=0'>
+				AND BI_NUM=#{biNum}
+			</if>
+			<if test='biTitle!=null and biTitle!=0'>
+				AND BI_TITLE=#{biTitle}
+			</if>
+		</where>
+	</select>
 	<select id="selectBoardInfo" resultType="com.game.vo.BoardInfoVO">
 		SELECT * FROM BOARD_INFO WHERE BI_NUM=#{biNum}
 	</select>
@@ -25,8 +24,7 @@
 		DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'))
 	</insert>
 	<update id="updateBoardInfo" parameterType="com.game.vo.BoardInfoVO">
-		UPDATE BOARD_INFO SET BI_TITLE=#{biTitle}, BI_CONTENT=#{biContent}
-		WHERE BI_NUM=#{biNum}
+		UPDATE BOARD_INFO SET BI_TITLE=#{biTitle}, BI_CONTENT=#{biContent} WHERE BI_NUM=#{biNum}
 	</update>
 	<delete id="deleteBoardInfo" parameterType="com.game.vo.BoardInfoVO">
 		DELETE FROM BOARD_INFO WHERE BI_NUM=#{biNum}
