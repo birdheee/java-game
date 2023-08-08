@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.game.common.CommonView;
 import com.game.service.BoardInfoService;
 import com.game.service.impl.BoardInfoServiceImpl;
+import com.game.vo.BoardInfoVO;
 
 @WebServlet("/board-info/*")
 public class BoardInfoServlet extends HttpServlet {
@@ -44,10 +45,9 @@ public class BoardInfoServlet extends HttpServlet {
 				String key = request.getParameter("searchType");
 				param.put("key", key);
 				param.put("value", value);
-			}else {
-				List<Map<String, String>> boardInfoList = boardInfoService.selectBoardInfoList(null);
-				request.setAttribute("boardInfoList", boardInfoList);
 			}
+			List<BoardInfoVO> boardInfoList = boardInfoService.selectBoardInfoList(null);
+			request.setAttribute("boardInfoList", boardInfoList);
 		}else if("view".equals(cmd) || "update".equals(cmd)) {
 			Map<String, String> boardInfo = boardInfoService.selectBoardInfo(request.getParameter("biNum"));
 			request.setAttribute("boardInfo", boardInfo);

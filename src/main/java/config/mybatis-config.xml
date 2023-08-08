@@ -7,6 +7,7 @@
 	</typeAliases>
 	-->
 	<settings>
+		<!-- camel case로 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
 	</settings>
 	<environments default="development">
@@ -25,6 +26,7 @@
 	</environments>
 	
 	<mappers>
+		<!-- 매퍼를 매핑하는 곳 -->
 		<mapper resource="mybatis/boardInfoMapper.xml"/> 
 	</mappers>
 	

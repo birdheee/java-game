@@ -18,8 +18,8 @@ public class MybatisSqlSessionFactory {
 	private final static String CONFIG_PATH = "config/mybatis-config.xml";
 	static {
 		try {
-			InputStream is = Resources.getResourceAsStream(CONFIG_PATH);
-			SqlSessionFactoryBuilder ssfb = new SqlSessionFactoryBuilder();
+			InputStream is = Resources.getResourceAsStream(CONFIG_PATH); // 경로 가져오기. InputStream은 bati 단위로 끊어서 읽도록 함
+			SqlSessionFactoryBuilder ssfb = new SqlSessionFactoryBuilder(); // 공장을 만들어내는 아이
 			SSF = ssfb.build(is);
 		}catch(IOException e) {
 			e.printStackTrace();
