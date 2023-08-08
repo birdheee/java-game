@@ -39,7 +39,7 @@
 </div>
 <script>
 	function goPage(url){
-		lacation.href = url;
+		location.href = url;
 	}
 	const loadFunc = function(){
 		const xhr = new XMLHttpRequest();
@@ -58,7 +58,7 @@
 					for(const board of list){
 						html += '<tr>';
 						html += '<td>' + board.biNum + '</td>';
-						html += '<td>' + board.biTitle + '</td>';
+						html += '<td><a href="/views/board-info/view?biNum=' + board.biNum + '">' + board.biTitle + '</td>';
 						html += '<td>' + board.uiName + '</td>';
 						html += '<td>' + board.credat + '</td>';
 						html += '</tr>';

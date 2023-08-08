@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.game.mapper.UserInfoMapper"> <!-- 대표하는 인터페이스가 있어야 함 -->
+	<select id="selectUserInfoList" resultType="com.game.vo.UserInfoVO">
+		SELECT * FROM user_Info;
+	</select>
+</mapper>

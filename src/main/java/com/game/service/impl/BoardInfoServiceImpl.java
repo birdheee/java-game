@@ -28,8 +28,13 @@ public class BoardInfoServiceImpl implements BoardInfoService {
 	}
 
 	@Override
-	public Map<String, String> selectBoardInfo(String biNum) {
-		return boardInfoDao.selectBoardInfo(biNum);
+	public BoardInfoVO selectBoardInfo(String biNum) {
+		try(SqlSession session = ssf.openSession()){
+			BoardInfoMapper biMapper = session.getMapper(BoardInfoMapper.class);
+			return biMapper.selectBoardInfo(biNum);
+		}catch(Exception e){
+			throw e;
+		}
 	}
 
 	@Override

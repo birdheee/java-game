@@ -49,7 +49,7 @@ public class BoardInfoServlet extends HttpServlet {
 			List<BoardInfoVO> boardInfoList = boardInfoService.selectBoardInfoList(null);
 			request.setAttribute("boardInfoList", boardInfoList);
 		}else if("view".equals(cmd) || "update".equals(cmd)) {
-			Map<String, String> boardInfo = boardInfoService.selectBoardInfo(request.getParameter("biNum"));
+			BoardInfoVO boardInfo = boardInfoService.selectBoardInfo(request.getParameter("biNum"));
 			request.setAttribute("boardInfo", boardInfo);
 		}
 		CommonView.forward(request, response);

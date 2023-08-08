@@ -1,8 +1,8 @@
 package com.game.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -11,37 +11,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import com.game.common.CommonView;
 import com.game.service.UserInfoService;
 import com.game.service.impl.UserInfoServiceImpl;
+import com.google.gson.Gson;
 
 @WebServlet("/user-info/*")
 
 public class UserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserInfoService uiService = new UserInfoServiceImpl();
+	private Gson gson = new Gson();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cmd = CommonView.getCmd(request);
+		String json = "";
 		if("list".equals(cmd)) {
-			Map<String, String> userInfo = new HashMap<>();
-			List<Map<String,String>> userInfoList = uiService.selectUserInfoList(userInfo);
-			request.setAttribute("userInfoList", userInfoList);
+			json = gson.toJson(uiService.selectUserInfoList(null));
 		}else if("view".equals(cmd) || "update".equals(cmd)) {
-			String uiNum = request.getParameter("uiNum");
-			Map<String, String> userInfo = uiService.selectUserInfo(uiNum);
-			request.setAttribute("userInfo", userInfo);
-		}else if("logout".equals(cmd)) {
-			HttpSession session = request.getSession();
-			session.invalidate(); // 무효화. 세션이 없어졌다 다시 생김
-			request.setAttribute("msg", "로그아웃 되었습니다");
-			request.setAttribute("url", "/user-info/login");
-			CommonView.forwardMessage(request, response);
-			return;
 		}
-		CommonView.forward(request, response);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(json); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

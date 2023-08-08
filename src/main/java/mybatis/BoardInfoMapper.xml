@@ -9,6 +9,7 @@
 		<where>
 			<if test='searchStr != null and searchStr != ""'>
 				<if test='searchType == "1" or searchType == "4" or searchType == "6" or searchType == "7"'>
+					<!-- 앞에 없으면 알아서 OR를 빼줌 -->
 					OR BI_TITLE LIKE CONCAT('%', #{searchStr}, '%')
 				</if>
 				<if test='searchType == "2" or searchType == "5" or searchType == "6" or searchType == "7"'>
@@ -21,7 +22,7 @@
 		</where>
 	</select>
 	<select id="selectBoardInfo" resultType="com.game.vo.BoardInfoVO">
-		SELECT * FROM BOARD_INFO WHERE BI_NUM=#{biNum}
+		SELECT BI.*, UI.UI_NAME FROM BOARD_INFO BI INNER JOIN USER_INFO UI ON BI.UI_NUM = UI.UI_NUM WHERE BI_NUM=#{biNum}
 	</select>
 	<insert id="insertBoardInfo" parameterType="com.game.vo.BoardInfoVO">
 		INSERT INTO BOARD_INFO(BI_TITLE, BI_CONTENT, UI_NUM, CREDAT, CRETIM, LMODAT, LMOTIM)

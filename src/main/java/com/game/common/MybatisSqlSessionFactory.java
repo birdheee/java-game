@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.game.mapper.BoardInfoMapper;
-import com.game.vo.BoardInfoVO;
+import com.game.mapper.ValoInfoMapper;
+import com.game.vo.ValoInfoVO;
 
 public class MybatisSqlSessionFactory {
 	
@@ -18,7 +18,7 @@ public class MybatisSqlSessionFactory {
 	private final static String CONFIG_PATH = "config/mybatis-config.xml";
 	static {
 		try {
-			InputStream is = Resources.getResourceAsStream(CONFIG_PATH); // 경로 가져오기. InputStream은 bati 단위로 끊어서 읽도록 함
+			InputStream is = Resources.getResourceAsStream(CONFIG_PATH); // 경로 가져오기. InputStream은 batis 단위로 끊어서 읽도록 함
 			SqlSessionFactoryBuilder ssfb = new SqlSessionFactoryBuilder(); // 공장을 만들어내는 아이
 			SSF = ssfb.build(is);
 		}catch(IOException e) {
@@ -32,25 +32,10 @@ public class MybatisSqlSessionFactory {
 	
 	public static void main(String[] args) {
 		SqlSessionFactory ssf = getSqlSessionFactory();
-		
-		try {
-			SqlSession session = ssf.openSession(true);
-			BoardInfoMapper biMapper = session.getMapper(BoardInfoMapper.class);
-			BoardInfoVO bi = new BoardInfoVO();
-			
-			// selectBoardInfoList
-			List<BoardInfoVO> list = biMapper.selectBoardInfoList(null);
-			for(BoardInfoVO board : list) {
-				System.out.println(board);
-			}
-			
-			// selectBoardInfo
-			bi.setBiNum(8);
-			BoardInfoVO biVo = biMapper.selectBoardInfo(bi);
-			System.out.println(biVo);
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		SqlSession session = ssf.openSession();
+		ValoInfoMapper viMapper = session.getMapper(ValoInfoMapper.class);
+		List<ValoInfoVO> infos = viMapper.selectValoInfoList(null);
+		ValoInfoVO info = viMapper.selectValoInfo("4");
+		System.out.println(info);
 	}
 }
