@@ -7,25 +7,30 @@
 	<title>쿠키런 킹덤 캐릭터 게시판</title>
 	<jsp:include page="/WEB-INF/views/common/head.jsp"/>
 	<style>
-		h3{
+		h2{
 			margin-top:80px;
 			margin-bottom:80px;
 			text-align:center;
+		}
+		.search{
+			float:right;
 		}
 	</style>
 </head>
 <body>
 <div class="container">
-	<h3>쿠키런 킹덤 캐릭터 게시판</h3>
-	<select name="searchType" id="searchType">
-		<option value="1">이름</option>
-		<option value="2">유형</option>
-		<option value="3">포지션</option>
-		<option value="4">등급</option>
-		<option value="5">개요</option>
-	</select>
-	<input type="text" name="searchStr" placeholder="검색어" id="searchStr">
-	<button class="btn btn-info" onclick="loadFunc()">검색</button>
+	<h2>쿠키런 킹덤 캐릭터 게시판</h2>
+	<div class="search">
+		<select name="searchType" id="searchType">
+			<option value="1">이름</option>
+			<option value="2">유형</option>
+			<option value="3">포지션</option>
+			<option value="4">등급</option>
+			<option value="5">개요</option>
+		</select>
+		<input type="text" name="searchStr" placeholder="검색어" id="searchStr">
+		<button class="btn btn-primary" onclick="loadFunc()">검색</button>
+	</div>
 	<table class="table table-bordered">
 	  <thead>
 	    <tr>
@@ -41,7 +46,7 @@
 	  </tbody>
 	  <tr>
 	  	<!-- 태그는 속성을 가질 수 있으며 무조건 String. 단, on만 script영역 -->
-	  	<td colspan="6" align="right"><button type="button" class="btn btn-info" onclick="goPage('/cookie-info/insert')">캐릭터 등록</button></td>
+	  	<td colspan="6" align="right"><button type="button" class="btn btn-primary" onclick="goPage('/cookie-info/insert')">캐릭터 등록</button></td>
 	  </tr>
 	</table>
 </div>

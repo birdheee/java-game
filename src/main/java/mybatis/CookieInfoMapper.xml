@@ -29,6 +29,7 @@
 	</select>
 	
 	<select id="selectCookieInfo" resultType="com.game.vo.CookieInfoVO">
-		SELECT * FROM COOKIE_INFO WHERE CI_NUM=#{ciNum}
+		SELECT CI_NUM, CI_NAME, CI_TYPE, CI_POS, CI_GRADE, DATE_FORMAT(CI_BIRTH, '%Y-%m-%d') CI_BIRTH,
+		CI_SKILL, CI_DESC FROM COOKIE_INFO WHERE CI_NUM=#{ciNum}
 	</select>
 </mapper>
