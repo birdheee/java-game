@@ -9,7 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.game.mapper.ValoInfoMapper;
+import com.game.mapper.CookieInfoMapper;
+import com.game.vo.CookieInfoVO;
 import com.game.vo.ValoInfoVO;
 
 public class MybatisSqlSessionFactory {
@@ -33,9 +34,9 @@ public class MybatisSqlSessionFactory {
 	public static void main(String[] args) {
 		SqlSessionFactory ssf = getSqlSessionFactory();
 		SqlSession session = ssf.openSession();
-		ValoInfoMapper viMapper = session.getMapper(ValoInfoMapper.class);
-		List<ValoInfoVO> infos = viMapper.selectValoInfoList(null);
-		ValoInfoVO info = viMapper.selectValoInfo("4");
-		System.out.println(info);
+		CookieInfoMapper ciMapper = session.getMapper(CookieInfoMapper.class);
+		List<CookieInfoVO> cookies = ciMapper.selectCookieInfoList(null);
+		CookieInfoVO cookie = ciMapper.selectCookieInfo("4");
+		System.out.println(cookie);
 	}
 }

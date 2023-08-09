@@ -30,6 +30,7 @@
 		<mapper resource="mybatis/BoardInfoMapper.xml"/>
 		<mapper resource="mybatis/UserInfoMapper.xml"/>
 		<mapper resource="mybatis/ValoInfoMapper.xml"/>
+		<mapper resource="mybatis/CookieInfoMapper.xml"/>
 	</mappers>
 	
 </configuration>

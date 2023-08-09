@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.game.mapper.CookieInfoMapper">
+	<select id="selectCookieInfoList" resultType="com.game.vo.CookieInfoVO">
+		SELECT CI_NUM, CI_NAME, CI_TYPE, CI_POS, CI_GRADE, DATE_FORMAT(CI_BIRTH, '%Y-%m-%d') CI_BIRTH FROM cookie_info
+		<where>
+			<if test='searchStr != null and searchStr != ""'>
+				<if test='searchType == "1"'>
+					OR CI_NAME LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "2"'>
+					OR CI_TYPE LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "3"'>
+					OR CI_POS LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "4"'>
+					OR CI_GRADE LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "5"'>
+					OR CI_DESC LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+			</if>
+		</where>
+		ORDER BY CI_NAME
+	</select>
+	
+	<select id="selectCookieInfo" resultType="com.game.vo.CookieInfoVO">
+		SELECT * FROM COOKIE_INFO WHERE CI_NUM=#{ciNum}
+	</select>
+</mapper>
