@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ee.mapper.LectureInfoMapper">
+	<select id="selectLectureInfoList" resultType="com.game.vo.LectureInfoVO">
+		SELECT * FROM LECTURE_INFO
+		<where>
+			<if test='searchStr != null and searchStr != ""'>
+				<if test='searchType == "1"'>
+					OR LI_NAME LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "2"'>
+					OR LI_PRO LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "3"'>
+					OR LI_CLASS LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+				<if test='searchType == "4"'>
+					OR LI_ROOM LIKE CONCAT('%', #{searchStr}, '%')
+				</if>
+			</if>
+		</where>
+		ORDER BY LI_NAME
+	</select>
+	
+	<select id="selectLectureInfo" resultType="com.game.vo.LectureInfoVO">
+		SELECT * FROM LECTURE_INFO WHERE LI_NUM=#{liNum}
+	</select>
+</mapper>
