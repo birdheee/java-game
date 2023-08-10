@@ -27,6 +27,12 @@
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState === 4){
 				if(xhr.status === 200){
+					const obj = JSON.parse(xhr.responseText);
+					for(const key in obj){
+						if(document.querySelector('#' + key)){
+							document.querySelector('#' + key).value = obj[key];
+						}
+					}
 					if(xhr.responseText === '1'){
 						alert('정상 수정 되었습니다.');
 						location.href = '/views/list';
