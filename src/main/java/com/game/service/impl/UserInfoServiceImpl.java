@@ -16,29 +16,37 @@ import com.game.service.UserInfoService;
 import com.game.vo.UserInfoVO;
 
 public class UserInfoServiceImpl implements UserInfoService {
-	// 아직은 큰 로직이 없음. 그저 중간다리 역할
-	// ID 유효성 검사 등을 함
 	private UserInfoDao uiDao = new UserInfoDaoImpl();
 	private SqlSessionFactory ssf = MybatisSqlSessionFactory.getSqlSessionFactory();
 	
 	@Override
-	public List<UserInfoVO> selectUserInfoList(UserInfoVO userInfo) {
+	public List<UserInfoVO> getUserInfoList(UserInfoVO userInfo) {
 		try(SqlSession session = ssf.openSession()){
-			UserInfoMapper uiMapper = session.getMapper(UserInfoMapper.class);
-			return uiMapper.selectUserInfoList(userInfo);
+			UserInfoMapper userInfoMapper = session.getMapper(UserInfoMapper.class);
+			return userInfoMapper.selectUserInfoList(userInfo);
 		}catch(Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public Map<String, String> selectUserInfo(String uiNum) {
-		return uiDao.selectUserInfo(uiNum);
+	public UserInfoVO getUserInfo(String uiNum) {
+		try(SqlSession session = ssf.openSession()){
+			UserInfoMapper userInfoMapper = session.getMapper(UserInfoMapper.class);
+			return userInfoMapper.selectUserInfo(uiNum);
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
-	public int insertUserInfo(Map<String, String> userInfo) {
-		return uiDao.insertUserInfo(userInfo);
+	public int addUserInfo(Map<String, String> userInfo) {
+		try(SqlSession session = ssf.openSession()){
+			UserInfoMapper userInfoMapper = session.getMapper(UserInfoMapper.class);
+			return userInfoMapper.insertUserInfo(userInfo);
+		}catch(Exception e) {
+			throw e;
+		}
 	}
 
 	@Override

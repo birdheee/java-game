@@ -5,6 +5,16 @@
 
 <mapper namespace="com.game.mapper.UserInfoMapper"> <!-- 대표하는 인터페이스가 있어야 함 -->
 	<select id="selectUserInfoList" resultType="com.game.vo.UserInfoVO">
-		SELECT * FROM user_Info;
+		SELECT UI_NUM, UI_ID, UI_NAME, DATE_FORMAT(UI_BIRTH, '%Y-%m-%d')UI_BIRTH 
+		FROM USER_INFO ORDER BY UI_ID
 	</select>
+	<select id="selectUserInfo" resultType="com.game.vo.UserInfoVO">
+		SELECT UI_NUM, UI_ID, UI_PWD, UI_NAME, DATE_FORMAT(UI_BIRTH, '%Y-%m-%d')UI_BIRTH, UI_DESC, 
+		DATE_FORMAT(CREDAT, '%Y-%m-%d') CREDAT FROM user_Info WHERE UI_NUM=#{uiNum}
+	</select>
+	<insert id="insertUserInfo" parameterType="com.game.vo.UserInfoVO">
+		INSERT INTO user_info(UI_ID, UI_NAME, UI_PWD, UI_BIRTH, UI_DESC, CREDAT, CRETIM, LMODAT, LMOTIM)
+		VALUES(#{uiId}, #{uiName}, #{uiPwd}, #{uiBirth}, #{uiDesc}, 
+		DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'), DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'))
+	</insert>
 </mapper>
