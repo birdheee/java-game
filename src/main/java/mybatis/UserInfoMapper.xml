@@ -13,7 +13,7 @@
 		DATE_FORMAT(CREDAT, '%Y-%m-%d') CREDAT FROM user_Info WHERE UI_NUM=#{uiNum}
 	</select>
 	<insert id="insertUserInfo" parameterType="com.game.vo.UserInfoVO">
-		INSERT INTO user_info(UI_ID, UI_NAME, UI_PWD, UI_BIRTH, UI_DESC, CREDAT, CRETIM, LMODAT, LMOTIM)
+		INSERT INTO USER_INFO(UI_ID, UI_NAME, UI_PWD, UI_BIRTH, UI_DESC, CREDAT, CRETIM, LMODAT, LMOTIM)
 		VALUES(#{uiId}, #{uiName}, #{uiPwd}, #{uiBirth}, #{uiDesc}, 
 		DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'), DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%H%i%s'))
 	</insert>

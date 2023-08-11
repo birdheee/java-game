@@ -29,7 +29,7 @@
 	  </tbody>
 	  <tr>
 	  	<!-- 태그는 속성을 가질 수 있으며 무조건 String. 단, on만 script영역 -->
-	  	<td colspan="4" align="right"><button type="button" class="btn btn-info" onclick="goPage('/user-info/insert')">등록</button></td>
+	  	<td colspan="4" align="right"><button type="button" class="btn btn-info" onclick="goPage('insert')">등록</button></td>
 	  </tr>
 	</table>
 </div>

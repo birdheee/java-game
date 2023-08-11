@@ -1,6 +1,5 @@
 package com.game.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -11,9 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.game.common.CommonView;
+import com.game.common.JSON;
 import com.game.service.UserInfoService;
 import com.game.service.impl.UserInfoServiceImpl;
 import com.google.gson.Gson;
@@ -41,56 +40,37 @@ public class UserInfoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String cmd = CommonView.getCmd(request);
-		String json = "";
-		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer();
-		String str = null;
-		while((str=br.readLine()) != null) {
-			sb.append(str);
+		Map<String, String> userInfo = JSON.parse(request, Map.class);
+		
+		if(userInfo.get("uiBirth")!=null) {
+			userInfo.put("uiBirth", userInfo.get("uiBirth").replace("-", ""));
 		}
-		Map<String, String> map = gson.fromJson(sb.toString(), Map.class);
 		
-//		Map<String, String> userInfo = new HashMap<>();
-//		userInfo.put("uiName", request.getParameter("uiName"));
-//		userInfo.put("uiPwd", request.getParameter("uiPwd"));
-//		userInfo.put("uiDesc", request.getParameter("uiDesc"));
-//		userInfo.put("uiId", request.getParameter("uiId"));
-//		if(request.getParameter("uiBirth")!=null) {
-//			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
-//		}
-		
+		int result = 0;
 		if("insert".equals(cmd)) {
-			int result = userInfoService.addUserInfo(map);
-			if(result == 1) {
-				json = "1";
-			}
-//			int result = UserInfoServlet.insertUserInfo(userInfo);
-//			request.setAttribute("msg", "등록 완료");
-//			request.setAttribute("url", "/user-info/login");
-//			if(result!=1) {
-//				request.setAttribute("msg", "등록 실패");
-//				request.setAttribute("url", "/user-info/insert");
-//			}
-		}else if("update".equals(cmd)) {
+			result = userInfoService.addUserInfo(userInfo);
+		}
+		
+//		}else if("update".equals(cmd)) {
 //			String uiNum = request.getParameter("uiNum");
 //			userInfo.put("uiNum", uiNum);
-//			int result = UserInfoServlet.updateUserInfo(userInfo);
+//			result = UserInfoServlet.updateUserInfo(userInfo);
 //			request.setAttribute("msg", "수정 완료");
 //			request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 //			if(result!=1) {
 //				request.setAttribute("msg", "수정 실패");
 //				request.setAttribute("url", "/user-info/update?uiNum=" + uiNum);
 //			}
-		}else if("delete".equals(cmd)) {
+//		}else if("delete".equals(cmd)) {
 //			String uiNum = request.getParameter("uiNum");
-//			int result = UserInfoServlet.deleteUserInfo(uiNum);
+//			result = UserInfoServlet.deleteUserInfo(uiNum);
 //			request.setAttribute("msg", "삭제 완료");
 //			request.setAttribute("url", "/user-info/list");
 //			if(result!=1) {
 //				request.setAttribute("msg", "삭제 실패");
 //				request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 //			}
-		}else if("login".equals(cmd)) {
+//		}else if("login".equals(cmd)) {
 //			request.setAttribute("msg", "아이디나 비밀번호를 확인하세요");
 //			request.setAttribute("url","/user-info/login");
 //			HttpSession session = request.getSession(); // 브라우저 하나당 세션이 생김
@@ -100,9 +80,9 @@ public class UserInfoServlet extends HttpServlet {
 //				request.setAttribute("msg", "로그인을 완료하였습니다.");
 //				request.setAttribute("url","/");
 //			}
-		}
+//		}
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.print(json);
+		out.print(result); // 1이면 정상 동작
 	}
 }
